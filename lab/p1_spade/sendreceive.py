@@ -18,7 +18,7 @@ class SenderAgent(Agent):
         self.add_behaviour(self.SendBehaviour())
 
 class ReceiverAgent(Agent):
-    class ReceiveBehaviour(OneShotBehaviour):
+    class ReceiveBehaviour(spade.behaviour.CyclicBehaviour):
         async def run(self):
             msg = await self.receive(timeout=10)  # Espera al mensaje 10 segundos
             if msg:
