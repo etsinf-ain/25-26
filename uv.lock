@@ -24,6 +24,7 @@ version = "0.1.0"
 source = { virtual = "." }
 dependencies = [
     { name = "agentspeak" },
+    { name = "pyjabber" },
     { name = "pytest" },
     { name = "spade" },
     { name = "spade-artifact" },
@@ -35,6 +36,7 @@ dependencies = [
 [package.metadata]
 requires-dist = [
     { name = "agentspeak", specifier = ">=0.2.2" },
+    { name = "pyjabber", specifier = "==0.3.0" },
     { name = "pytest", specifier = ">=9.0.3" },
     { name = "spade", specifier = ">=4.1.2" },
     { name = "spade-artifact", specifier = ">=0.3.1" },
