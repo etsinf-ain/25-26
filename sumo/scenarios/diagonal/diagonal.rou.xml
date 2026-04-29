@@ -1,0 +1,5 @@
+<routes>
+    <vType id="car" length="5" minGap="2.5" maxSpeed="13.89" accel="2.6" decel="4.5" sigma="0.5" tau="1.0"/>
+    <flow id="f1" type="car" begin="0" end="300" probability="0.1" from="w2c" to="c2e"/>
+    <flow id="f2" type="car" begin="0" end="300" probability="0.1" from="sw2c" to="c2ne"/>
+</routes>

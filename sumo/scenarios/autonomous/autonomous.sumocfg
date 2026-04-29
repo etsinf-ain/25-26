@@ -1,0 +1,6 @@
+<configuration>
+    <input>
+        <net-file value="autonomous.net.xml"/>
+        <route-files value="autonomous.rou.xml"/>
+    </input>
+</configuration>

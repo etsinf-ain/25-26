@@ -1,0 +1,9 @@
+<edges>
+    <!-- Calle Horizontal -->
+    <edge id="w2c" from="w" to="center" numLanes="1" speed="13.89"/>
+    <edge id="c2e" from="center" to="e" numLanes="1" speed="13.89"/>
+    
+    <!-- Calle Diagonal -->
+    <edge id="sw2c" from="sw" to="center" numLanes="1" speed="13.89"/>
+    <edge id="c2ne" from="center" to="ne" numLanes="1" speed="13.89"/>
+</edges>

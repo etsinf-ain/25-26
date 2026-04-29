@@ -1,0 +1,6 @@
+<configuration>
+    <input>
+        <net-file value="interurban.net.xml"/>
+        <route-files value="interurban.rou.xml"/>
+    </input>
+</configuration>

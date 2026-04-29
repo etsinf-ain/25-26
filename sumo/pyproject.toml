@@ -1,0 +1,21 @@
+[project]
+name = "sumo-lab"
+version = "0.1.0"
+description = "SUMO Multi-Agent Traffic Laboratory"
+requires-python = "==3.12.*"
+dependencies = [
+    "agentspeak>=0.2.2",
+    "matplotlib>=3.10.9",
+    "networkx>=3.6.1",
+    "osmnx>=2.1.0",
+    "pyjabber==0.3.0",
+    "pytest>=9.0.3",
+    "spade>=4.1.2",
+    "spade-artifact>=0.3.1",
+    "spade-bdi>=0.3.2",
+    "spade-pubsub>=0.3.0",
+    "streamlit>=1.56.0",
+    "sumolib>=1.26.0",
+    "sumonetvis>=1.6.2",
+    "traci>=1.26.0",
+]
