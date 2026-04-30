@@ -42,7 +42,7 @@ col1, col2 = st.sidebar.columns(2)
 start_btn = col1.button("▶️ Start")
 stop_btn = col2.button("⏹️ Stop")
 
-st.title("🚦 SUMO Control Center")
+st.title("SUMO Control Center")
 
 if stop_btn:
     if st.session_state.engine:
@@ -71,15 +71,21 @@ if start_btn and not st.session_state.running:
         from tools import build_graph_network
         build_graph_network.create_sumo_graph_network(seed=seed)
     
+    # Placeholder for state messages at sidebar
     st.session_state.engine = SumoEngine(selected_cfg, seed=seed)
+    if wait_agents:
+        status_placeholder = st.sidebar.empty()
+        status_placeholder.info(f"Waiting for agent on port {agent_port}...")
     st.session_state.engine.start(wait_for_agents=wait_agents, port=agent_port)
+    if wait_agents:
+        status_placeholder.empty()
     st.session_state.running = True
     st.session_state.seed = seed
 
 if st.session_state.running and st.session_state.engine:
-    st.sidebar.code(f"Semilla: {st.session_state.seed}")
+    st.sidebar.code(f"Seed: {st.session_state.seed}")
     if wait_agents:
-        st.sidebar.info(f"Multi-client Mode: Waiting for agent connection on port {agent_port}...")
+        st.sidebar.success(f"MAS detected at port {agent_port}")
     
     fig, ax = plt.subplots(figsize=(6, 6))
     st.session_state.engine.setup_viz(ax)
@@ -133,7 +139,7 @@ if st.session_state.running and st.session_state.engine:
                 veh_patches[vid].angle = plt_angle
             
             st.session_state.engine.update_viz(ax, data)
-            ax.set_title(f"Tiempo: {data['time']}s | Vehículos: {data['veh_count']} | {speed_factor}x")
+            ax.set_title(f"Time: {data['time']}s | Vehicles: {data['veh_count']} | {speed_factor}x")
             plot_placeholder.pyplot(fig, width="stretch")
             
             # Wait for the next step

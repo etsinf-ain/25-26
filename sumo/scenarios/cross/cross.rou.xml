@@ -2,6 +2,10 @@
     <!-- tau debe ser >= al paso de simulación (1.0s) para evitar colisiones -->
     <vType id="car" accel="2.6" decel="4.5" sigma="0.5" length="5" minGap="1.5" maxSpeed="13.89" speedDev="0.1" tau="1.0"/>
     
-    <flow id="f_ns" type="car" begin="0" end="300" probability="0.1" from="n2c" to="c2s"/>
-    <flow id="f_ew" type="car" begin="0" end="300" probability="0.1" from="e2c" to="c2w"/>
+    <flow id="f_ns" type="car" begin="0" end="300" probability="0.08" from="n2c" to="c2s"/>
+    <flow id="f_ew" type="car" begin="0" end="300" probability="0.08" from="e2c" to="c2w"/>
+    <flow id="f_ne" type="car" begin="0" end="300" probability="0.04" from="n2c" to="c2e"/> <!-- Giro Izquierda -->
+    <flow id="f_sw" type="car" begin="0" end="300" probability="0.04" from="s2c" to="c2w"/> <!-- Giro Izquierda -->
+    <flow id="f_nw" type="car" begin="0" end="300" probability="0.02" from="n2c" to="c2w"/> <!-- Giro Derecha -->
+
 </routes>

@@ -6,7 +6,7 @@ Este documento detalla la integracion tecnologica del laboratorio y describe la 
 
 ## 1. Validacion de la Infraestructura mediante Tests
 
-Si experimentas problemas de visualizacion o bloqueos de red, debes recurrir a los scripts puros de validacion en `tests/`. Estos archivos prescinden del servidor Streamlit y operan directamente sobre sockets crudos de TraCI.
+Si experimentas problemas de visualizacion o bloqueos de red, debes recurrir a los scripts puros de validacion en `tests/`. Estos archivos prescinden del servidor Streamlit y operan directamente sobre sockets de TraCI.
 
 ### Ejecucion de Pruebas
 
@@ -27,7 +27,7 @@ La capa visual se redibuja continuamente a peticion del usuario solicitando list
 
 ---
 
-## 3. Desglose Pedagogico de Escenarios
+## 3. Desglose de Escenarios
 
 Los alumnos deben resolver los problemas de coordinacion en orden secuencial:
 

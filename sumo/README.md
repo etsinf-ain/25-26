@@ -6,12 +6,12 @@ Este proyecto proporciona un entorno interactivo y visual para experimentar con 
 
 ### Requisitos Previos
 
-1. **Eclipse SUMO**: Es mandatorio tener instalado SUMO en el sistema operativo.
+1. **Eclipse SUMO**: Es obligatorio tener instalado SUMO en el sistema operativo.
    * En macOS (usando Homebrew): `brew install sumo`
    * En Linux (Ubuntu/Debian): `sudo apt-get install sumo sumo-tools sumo-doc`
 2. **Variable de Entorno**: Configura `SUMO_HOME` para apuntar a la ruta base de la suite:
-   * macOS típicamente: `/opt/homebrew/opt/sumo/share/sumo`
-   * Linux típicamente: `/usr/share/sumo`
+   * macOS: `/opt/homebrew/opt/sumo/share/sumo`
+   * Linux: `/usr/share/sumo`
 
 ### Instalación de dependencias
 
@@ -33,9 +33,9 @@ uv run streamlit run dashboard.py
 ## Arquitectura de Archivos y Organización
 
 * **`dashboard.py`**: Interfaz de usuario basada en Streamlit. Maneja selectores de escenarios y sliders de velocidad.
-* **`sim_engine.py`**: El núcleo de la abstracción. Envuelve las llamadas crudas de TraCI en un objeto `SumoEngine`.
+* **`sim_engine.py`**: El núcleo de la abstracción. Envuelve las llamadas de TraCI en un objeto `SumoEngine`.
 * **`scenarios/`**: Subdirectorios con topologías específicas (mallas `.net.xml`, archivos de rutas `.rou.xml` y configuraciones `.sumocfg`).
-* **`tools/`**: Utilidades CLI independientes para compilar redes complejas desde OpenStreetMap.
+* **`tools/`**: Utilidades independientes para generar escenarios.
 * **`tests/`**: Suite de validación para garantizar que los puertos TCP y sockets funcionan sin dependencias de Streamlit.
 
 Para profundizar en la programación de controladores y las fases de los semáforos, consulta `TUTORIAL.md`.
