@@ -1,6 +1,7 @@
 from loguru import logger
 from spade_pubsub import PubSubMixin
 from slixmpp.stanza.message import Message as SlixmppMessage
+import xml.etree.ElementTree as ET            
 
 
 class ArtifactMixin(PubSubMixin):
@@ -29,9 +30,6 @@ class ArtifactComponent:
         node = msg["pubsub_event"]["items"]["node"]
         if node in self.focus_callbacks:
             item_xml = msg["pubsub_event"]["items"]["item"].xml
-            import xml.etree.ElementTree as ET
-            logger.info("Raw XML: " + ET.tostring(item_xml, encoding="unicode"))
-            
             payload_element = item_xml.find("{spade.pubsub}payload")
             if payload_element is not None:
                 text = payload_element.text

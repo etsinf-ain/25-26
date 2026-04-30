@@ -278,10 +278,6 @@ class PubSubMixin:
                 payload_stanza = Element("{spade.pubsub}payload")
                 payload_stanza.text = str(payload)
 
-                iq = self.pubsub.xmpp.Iq()
-                # Wait, I can't print the exact outgoing without deeper hooks. Let me set debug logging.
-                logger.debug(f"Publishing {payload} to {target_node} with id {item_id}")
-                
                 res = await self.pubsub.publish(
                     target_jid, target_node, item_id, payload_stanza, ifrom=ifrom
                 )
