@@ -87,6 +87,7 @@ def create_autonomous_city(seed=None):
         sys.executable, script_path,
         "-n", "scenarios/autonomous/autonomous.net.xml",
         "-e", "100", "-p", "2.0",  # Fewer cars to not collapse SPADE
+        "-o", "scenarios/autonomous/autonomous.trips.xml",
         "-r", "scenarios/autonomous/autonomous.rou.xml"
     ]
     if seed is not None:

@@ -93,6 +93,7 @@ def create_random_city(seed=None):
         sys.executable, script_path,
         "-n", "scenarios/random/random.net.xml",
         "-e", "250", "-p", "1.2",
+        "-o", "scenarios/random/random.trips.xml",
         "-r", "scenarios/random/random.rou.xml"
     ]
     if seed is not None:

@@ -31,14 +31,14 @@ La capa visual se redibuja continuamente a peticion del usuario solicitando list
 
 Los alumnos deben resolver los problemas de coordinacion en orden secuencial:
 
-1. **street**: Una unica recta. Pensada para familiarizarse con las llamadas basicas y el calculo de aceleracion.
-2. **cross**: Interseccion tipica. Requiere alternar luces verdes sin colisiones.
-3. **diagonal**: Introduce angulos no rectos que alteran la percepcion visual.
-4. **dayuan**: Flujos circulares continuos donde el rendimiento de paso es critico.
-5. **grid**: Reticula 3x3. Un semaforo mal coordinado puede causar un atasco en cascada.
-6. **graph**: Rutas reales de Valencia. Calles estrechas y topologias no uniformes.
-7. **random**: Entornos unicos. Obligan a disenar heuristicas generales.
-8. **autonomous**: Intersecciones cerradas con vehiculos que no respetan prioridades humanas.
+1. **street**: Una única recta. Pensada para familiarizarse con las llamadas básicas y el cálculo de aceleración.
+2. **basic_cross**: Intersección ortogonal simple (sentido único). Ideal para el primer agente de semáforos.
+3. **cross**: Intersección más compleja (múltiples carriles y giros). Requiere alternar luces verdes sin colisiones.
+4. **diagonal**: Introduce ángulos no rectos que alteran la percepción visual.
+5. **dayuan**: Flujos circulares continuos donde el rendimiento de paso es crítico.
+6. **grid**: Retícula 3x3. Un semáforo mal coordinado puede causar un atasco en cascada.
+7. **random**: Entornos únicos. Obligan a diseñar heurísticas generales.
+8. **autonomous**: Intersecciones cerradas con vehículos que no respetan prioridades humanas.
 9. **interurban**: Autopistas donde el cambio de carril es el factor clave.
 
 ---

@@ -9,9 +9,15 @@ Este proyecto proporciona un entorno interactivo y visual para experimentar con 
 1. **Eclipse SUMO**: Es obligatorio tener instalado SUMO en el sistema operativo.
    * En macOS (usando Homebrew): `brew install sumo`
    * En Linux (Ubuntu/Debian): `sudo apt-get install sumo sumo-tools sumo-doc`
-2. **Variable de Entorno**: Configura `SUMO_HOME` para apuntar a la ruta base de la suite:
-   * macOS: `/opt/homebrew/opt/sumo/share/sumo`
-   * Linux: `/usr/share/sumo`
+2. **Variables de Entorno**: Configura las rutas necesarias en tu perfil de shell:
+   * `SUMO_HOME`: Apunta a la base de la suite SUMO.
+     * macOS: `/opt/homebrew/opt/sumo/share/sumo`
+     * Linux: `/usr/share/sumo`
+   * `PROJ_LIB`: Necesaria para el escenario `graph` (conversión de mapas OSM).
+     * macOS: `/opt/homebrew/share/proj`
+     * Linux: `/usr/share/proj`
+     * Windows: `C:\Program Files\SUMO\share\proj`
+
 
 ### Instalación de dependencias
 

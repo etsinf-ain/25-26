@@ -39,6 +39,7 @@ def create_interurban_network(seed=None):
         sys.executable, script_path,
         "-n", "scenarios/interurban/interurban.net.xml",
         "-e", "150", "-p", "1.5",
+        "-o", "scenarios/interurban/interurban.trips.xml",
         "-r", "scenarios/interurban/interurban.rou.xml",
         "--seed", str(seed)
     ]

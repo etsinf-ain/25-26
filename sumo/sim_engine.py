@@ -4,7 +4,6 @@ import matplotlib.pyplot as plt
 import matplotlib.patches as patches
 import numpy as np
 import os
-import sys
 import re
 
 class SumoEngine:
@@ -31,9 +30,13 @@ class SumoEngine:
         self.step_count = 0
         
     def _get_net_file_from_cfg(self, cfg_file):
-        """Extracts the .net.xml path dynamically from the .sumocfg file."""
+        """
+        Extracts the .net.xml path dynamically from the .sumocfg file.
+        This allows the engine to find the network file even if relative paths are used in cfg.
+        """
         with open(cfg_file, 'r') as f:
             content = f.read()
+            # Match <net-file value="filename.net.xml"/>
             match = re.search(r'net-file value="([^"]+)"', content)
             if match: 
                 net_rel = match.group(1)
@@ -62,8 +65,6 @@ class SumoEngine:
             cmd.extend(["--num-clients", "2"])
             traci.start(cmd, port=port)
             # traci.setOrder(1) sets this script (Dashboard) as Client 1.
-            # Client 1 advances time, but SUMO will block advancement until
-            # Client 2 (Agent, Order=2) finishes sending its commands and processes its step.
             traci.setOrder(1)
         else:
             traci.start(cmd)
@@ -89,6 +90,7 @@ class SumoEngine:
             for lane_id, indices in unique_lanes.items():
                 lane = self.net.getLane(lane_id)
                 pos = lane.getShape()[-1]
+                # Traffic lights are initially red dots
                 marker = ax.scatter(pos[0], pos[1], s=40, color="red", zorder=4, edgecolors="black", linewidth=0.5)
                 self.tl_markers.append({"tl_id": tl_id, "indices": indices, "marker": marker})
 
@@ -117,26 +119,35 @@ class SumoEngine:
 
     def update_viz(self, ax, data=None):
         """
-        Updates the Matplotlib plot with the new step data.
-        Refreshes vehicle positions and traffic light colors.
+        Updates the Matplotlib plot with the current simulation state.
+        
+        Args:
+            ax: Matplotlib axis to update.
+            data (dict): Optional step data. If None, it will be collected.
         """
         if data is None: data = self.get_step_data()
         self.step_count += 1
-        if data["positions"]: self.v_dots.set_offsets(data["positions"])
-        else: self.v_dots.set_offsets(np.empty((0, 2)))
+        
+        # Update vehicle positions
+        if data["positions"]:
+            self.v_dots.set_offsets(data["positions"])
+        else:
+            self.v_dots.set_offsets(np.empty((0, 2)))
+            
+        # Update traffic light colors
         for m in self.tl_markers:
             state = data["tl_states"][m["tl_id"]]
             chars = [state[i] for i in m["indices"]]
-            # Logic adapted to Spain - Visualization priorities:
-            # 1. 'y' / 'Y' -> Transition phase to red (orange)
-            # 2. 'g' -> Unprotected green / Yield (yellow) -> Overrides 'G'
-            # 3. 'G' -> Protected green (lime)
+            
+            # Logic to determine the dominant state of the TL
+            # 1. 'y' / 'Y' -> Yellow (orange)
+            # 2. 'g' -> Green (blinking yellow)
+            # 3. 'G' -> Green (lime)
             # 4. 'r' / 'R' -> Red (red)
             if 'y' in chars or 'Y' in chars: color = "orange"
             elif 'g' in chars: 
                 # Blinking yellow (amber intermitente) every step
                 color = "orange" if self.step_count % 2 == 0 else "dimgray" 
-
             elif 'G' in chars: color = "lime"
             else: color = "red"
             

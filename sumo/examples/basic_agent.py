@@ -75,7 +75,7 @@ async def main():
         return
 
     # 2. Lanzamiento del Agente
-    agent = TrafficLightAgent("hello_agent@localhost", "password")
+    agent = TrafficLightAgent("basic_tla@localhost", "password")
     await agent.start()
     
     print("\n--- Simulación en marcha ---")
