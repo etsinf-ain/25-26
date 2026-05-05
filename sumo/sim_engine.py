@@ -49,12 +49,13 @@ class SumoEngine:
     def start(self, wait_for_agents=False, port=8813):
         """
         Starts the SUMO process via TraCI.
-        
-        Args:
-            wait_for_agents (bool): If True, activates Multi-Client mode.
-                The simulator will wait for an external agent connection.
-            port (int): TraCI port to use if wait_for_agents is True.
         """
+        # Cerramos cualquier conexion previa que se haya quedado colgada
+        try:
+            traci.close()
+        except:
+            pass
+            
         cmd = ["sumo", "-c", self.cfg_file, "--no-step-log", "--no-warnings"]
         if self.seed is not None:
             cmd.extend(["--seed", str(self.seed)])
@@ -79,6 +80,28 @@ class SumoEngine:
                 shape = lane.getShape()
                 ax.plot([p[0] for p in shape], [p[1] for p in shape], color="gray", linewidth=1, zorder=1)
         
+        # --- NUEVO: Dibujar Sensores E1 (Espiras) ---
+        for e1_id in traci.inductionloop.getIDList():
+            lane_id = traci.inductionloop.getLaneID(e1_id)
+            # Obtenemos la posición (offset) en el carril
+            pos_offset = traci.inductionloop.getPosition(e1_id)
+            
+            # Usamos sumolib para convertir offset de carril en coordenadas (x, y)
+            lane = self.net.getLane(lane_id)
+            from sumolib.geomhelper import positionAtShapeOffset
+            x, y = positionAtShapeOffset(lane.getShape(), pos_offset)
+            
+            # Dibujamos un cuadrado fucsia pequeño en la posición de la espira
+            ax.scatter(x, y, s=20, color="magenta", marker="s", zorder=4, label="E1")
+
+        # --- NUEVO: Dibujar Sensores E2 (Área) ---
+        for e2_id in traci.lanearea.getIDList():
+            lane_id = traci.lanearea.getLaneID(e2_id)
+            lane = self.net.getLane(lane_id)
+            shape = lane.getShape()
+            # Dibujamos una línea fucsia más gruesa sobre el carril para representar el área
+            ax.plot([p[0] for p in shape], [p[1] for p in shape], color="magenta", linewidth=4, alpha=0.6, zorder=2)
+
         self.tl_markers = []
         for tl_id in traci.trafficlight.getIDList():
             lanes = traci.trafficlight.getControlledLanes(tl_id)

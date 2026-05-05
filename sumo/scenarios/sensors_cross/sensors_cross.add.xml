@@ -1,0 +1,7 @@
+<additional>
+    <!-- Espira E1 en el carril Norte (n2c_0) a 20m del cruce (pos=80 en una calle de 100m) -->
+    <inductionLoop id="e1_north" lane="n2c_0" pos="80" freq="1" file="out.xml"/>
+    
+    <!-- Detector de Área E2 en el carril Oeste (w2c_0) cubriendo los últimos 50m -->
+    <laneAreaDetector id="e2_west" lane="w2c_0" pos="50" length="50" freq="1" file="out.xml"/>
+</additional>

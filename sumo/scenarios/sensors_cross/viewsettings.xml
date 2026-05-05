@@ -1,0 +1,6 @@
+<viewsettings>
+    <scheme name="standard">
+        <detectors showDetector="1" detectorSize="3.5" detectorColor="255,0,255"/>
+    </scheme>
+    <viewport zoom="800" x="100" y="100"/>
+</viewsettings>

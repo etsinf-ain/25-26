@@ -1,0 +1,1 @@
+<configuration><input><net-file value="mixed.net.xml"/><route-files value="mixed.rou.xml"/><additional-files value="vtypes.add.xml"/></input></configuration>

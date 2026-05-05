@@ -4,49 +4,83 @@ Este documento explica la implementacion de clientes autonomos conectados a la i
 
 ## Mecanismo Multi-Cliente en TraCI
 
-Por defecto, SUMO solo acepta un cliente TCP. Para permitir que coexistan el visualizador de Streamlit y el agente inteligente de toma de decisiones, se utiliza el sistema de prioridades de TraCI.
+Por defecto, SUMO solo acepta un cliente TCP. Para permitir que coexistan el visualizador de Streamlit y el agente inteligente, se utiliza el sistema de prioridades de TraCI.
 
 1. El visualizador actua como **Cliente 1**.
+  
 2. El agente actua como **Cliente 2**.
+  
 
 Ambos deben invocar secuencialmente `traci.simulationStep()`. SUMO sincronizara el paso de tiempo unicamente cuando haya recibido confirmacion de todos los clientes registrados.
 
 ## Programacion del Controlador
 
-Accede a la carpeta `examples/` y utiliza `dummy_agent.py`.
-```python
-import traci
+### Uso de Artefactos y Agentes Básicos
 
-# El puerto se obtiene del panel de Streamlit
-traci.init(port=8813)
-traci.setOrder(2) # Prioridad 2 para el agente de control
-```
-A partir de este punto, puedes implementar algoritmos de optimizacion (como Q-Learning, Heuristicas por colas de espera o Redes Neuronales) capturando datos de entrada e inyectando ordenes sobre los semaforos.
+Para separar la logica de control del simulador, podemos usar **Artefactos**. Un artefacto actua como una abstraccion de un elemento fisico (como un semaforo o un sensor) que el agente puede observar y manipular.
+
+Ejemplo: `basic_agent.py` muestra como crear un agente SPADE que se conecta a TraCI y utiliza un bucle de control simple para gestionar el trafico.
 
 ## Interpretación de Semáforos
 
-Al consultar el estado de un semáforo con `traci.trafficlight.getRedYellowGreenState(id)`, recibirás una cadena de caracteres. Cada carácter representa un movimiento (link) controlado por esa intersección:
+Al consultar el estado de un semáforo con `traci.trafficlight.getRedYellowGreenState(id)`, recibirás una cadena de caracteres. Cada carácter representa un movimiento (link) controlado por esa intersección.
 
 | Carácter | Significado | Descripción |
-| :---: | :--- | :--- |
-| **`G`** | Verde prioritario | Los vehículos avanzan sin restricciones. |
-| **`g`** | Verde no prioritario | Permite el paso, pero cediendo el paso a flujos contrarios. |
-| **`r`** / **`R`** | Rojo | Detención obligatoria. |
-| **`y`** / **`Y`** | Amarillo | Fase de transición a rojo. |
-| **`o`** | Apagado | El semáforo no está operativo. |
 
-La longitud de la cadena depende de la complejidad del cruce. Por ejemplo, en una intersección de dos carreteras con dos carriles cada una, verás secuencias de 16 caracteres organizadas en cuatro grupos por cada entrada (Norte, Este, Sur, Oeste). Cada semáforo del cruce indica cuatro posibles movimientos: giro derecha, recto, giro izquierda y cambio de sentido.
+| :---: | :--- | :--- |
+
+| **`G`** | Verde prioritario | Los vehículos avanzan sin restricciones. |
+
+| **`g`** | Verde no prioritario | Permite el paso, pero cediendo el paso a flujos contrarios. |
+
+| **`r`** / **`R`** | Rojo | Detención obligatoria. |
+
+| **`y`** / **`Y`** | Amarillo | Fase de transición a rojo. |
+
+###
 
 ### Ejemplo: Escenario 'Cross'
-En el escenario de ejemplo `cross`, el semáforo `center` controla 16 movimientos. Si el agente imprime:
-`Semáforo 'center': GGggrrrrGGggrrrr`
 
-Esto se interpreta como:
-*   **`GGgg`** (Norte): Flujo abierto.
-*   **`rrrr`** (Este): Detenidos.
-*   **`GGgg`** (Sur): Flujo abierto.
-*   **`rrrr`** (Oeste): Detenidos.
+En el escenario `cross`, el semáforo `center` controla 16 movimientos. Una secuencia como `GGggrrrrGGggrrrr` indica que el eje Norte-Sur tiene el paso abierto mientras que el Este-Oeste esta detenido.
 
-En este estado, los vehículos pueden circular en el eje Norte-Sur, mientras que el tráfico del eje Este-Oeste permanece detenido en rojo.
+## Agentes BDI
 
+Cuando la toma de decisiones requiere evaluar condiciones complejas (creencias) y perseguir objetivos (deseos), utilizamos la arquitectura **BDI (Belief-Desire-Intention)**.
 
+- **Agentes SPADE-BDI**: Permiten programar la logica en **AgentSpeak** (archivos `.asl`).
+  
+- **Reglas y Planes**: El agente reacciona a cambios en el trafico segun sus reglas predefinidas.
+  
+
+Ejemplo: `bdi_integration.py` integra el motor BDI con SUMO, usando el archivo `traffic.asl` para definir la estrategia de control.
+
+## Sensores e Identificación Automática
+
+### Sensores Físicos (E1 y E2)
+
+- **Induction Loops (E1)**: Detectan el paso puntual de un vehículo. Útiles para conteo.
+  
+- **Lane Area Detectors (E2)**: Monitorizan un área (ej: 50m). Permiten medir colas.
+  
+
+Ejemplos: `e1_sensor_agent.py` y `e2_sensor_agent.py`.
+
+### Descubrimiento Automático de Elementos
+
+En modelos complejos o aleatorios, el agente no conoce de antemano los IDs de los semáforos o sensores. Para ello se utiliza la técnica de **Discovery**. El agente interroga a TraCI al inicio para identificar todos los elementos disponibles y construir su propio mapa mental del escenario.
+
+Ejemplo: `discovery_agent.py` automatiza la identificacion de la infraestructura de SUMO.
+
+## Conducción Autónoma y V2X
+
+### Detección Lógica (FCD)
+
+En escenarios sin sensores fisicos, los agentes usan **FCD (Floating Car Data)**. El agente simula una "antena" que detecta coches por proximidad GPS.
+
+Ejemplo: `fcd_agent.py`.
+
+### Comunicación Vehículo-a-Vehículo (V2V)
+
+Los coches inteligentes pueden descubrirse y comunicarse directamente para negociar el paso.
+
+Ejemplo: `v2v_greeting.py`.

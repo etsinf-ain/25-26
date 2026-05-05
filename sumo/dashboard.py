@@ -70,6 +70,12 @@ if start_btn and not st.session_state.running:
     elif selected_cfg.endswith("interurban.sumocfg"):
         from tools import build_interurban
         build_interurban.create_interurban_network(seed)
+    elif selected_cfg.endswith("mixed.sumocfg"):
+        from tools import build_mixed
+        build_mixed.create_mixed_city(seed)
+    elif selected_cfg.endswith("random_sensorized.sumocfg"):
+        from tools import build_random_sensorized
+        build_random_sensorized.build_random_sensorized(seed)
     
     # Initialize and start the engine
     st.session_state.engine = SumoEngine(selected_cfg, seed=seed)
@@ -127,7 +133,14 @@ if st.session_state.running and st.session_state.engine:
                 plt_angle = -angle + 90
                 
                 if vid not in veh_patches:
-                    r = patches.Rectangle((0,0), 5, 2, color="blue", zorder=3)
+                    # Si es un coche inteligente lo ponemos amarillo, si no azul (por defecto)
+                    try:
+                        type_id = traci.vehicle.getTypeID(vid)
+                        v_color = "magenta" if type_id == "intelligent" else "blue"
+                    except:
+                        v_color = "blue"
+                        
+                    r = patches.Rectangle((0,0), 5, 2, color=v_color, zorder=3)
                     veh_patches[vid] = r
                     ax.add_patch(r)
                 
