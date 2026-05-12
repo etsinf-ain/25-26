@@ -3,7 +3,7 @@ import traci
 import spade
 from spade.agent import Agent
 from spade.message import Message
-from spade.behaviour import CyclicBehaviour
+from spade.behaviour import CyclicBehaviour, OneShotBehaviour
 from spade_artifact import Artifact, ArtifactMixin
 
 # El artefacto actua como un Broker de descubrimiento
@@ -34,6 +34,18 @@ class ReceiveGreeting(CyclicBehaviour):
         if msg:
             print(f"[{self.agent.jid}] He recibido un saludo de {msg.sender}: {msg.body}")
 
+# Nuevo: comportamiento para enviar un saludo como OneShotBehaviour (se ejecuta en el contexto del agente)
+class SayHelloBehaviour(OneShotBehaviour):
+    def __init__(self, to_jid):
+        super().__init__()
+        self.to_jid = to_jid
+
+    async def run(self):
+        print(f"[{self.agent.jid}] Enviando saludo V2V a {self.to_jid} (desde OneShotBehaviour)")
+        msg = Message(to=self.to_jid)
+        msg.body = "Hola vecino, soy un coche inteligente."
+        await self.send(msg)
+
 # El agente que representa a un coche inteligente
 class SmartCarAgent(ArtifactMixin, Agent):
     async def setup(self):
@@ -50,8 +62,9 @@ class SmartCarAgent(ArtifactMixin, Agent):
         for neighbor in found_jids:
             if neighbor != str(self.jid) and neighbor not in self.known_neighbors:
                 self.known_neighbors.add(neighbor)
-                # Enviamos el saludo V2V
-                asyncio.create_task(self.say_hello(neighbor))
+                # Enviamos el saludo V2V usando un OneShotBehaviour para que el envio se haga dentro
+                # del contexto del agente (evita problemas al llamar a Agent.send desde tareas asyncio externas)
+                self.add_behaviour(SayHelloBehaviour(neighbor))
 
     async def say_hello(self, to_jid):
         print(f"[{self.jid}] Enviando saludo V2V a {to_jid}")
