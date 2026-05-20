@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<additional>
+    <vType id="passenger_fast" vClass="passenger" maxSpeed="15.0" color="red"/>
+    <vType id="passenger_normal" vClass="passenger" maxSpeed="12.0" color="blue"/>
+    <vType id="passenger_slow" vClass="passenger" maxSpeed="8.0" color="green"/>
+    <vType id="truck" vClass="truck" maxSpeed="10.0" color="yellow" length="10.0"/>
+</additional>

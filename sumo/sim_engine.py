@@ -74,11 +74,51 @@ class SumoEngine:
         """
         Sets up the initial network visualization in Matplotlib.
         Draws the road edges and initializes the traffic light markers.
+        Highlights one-way streets with directional arrows.
         """
         for edge in self.net.getEdges():
             for lane in edge.getLanes():
                 shape = lane.getShape()
                 ax.plot([p[0] for p in shape], [p[1] for p in shape], color="gray", linewidth=1, zorder=1)
+            
+            # Dibujar flechas direccionales para calles unidireccionales (1 carril)
+            is_oneway = len(edge.getLanes()) == 1
+            if is_oneway:
+                lane = edge.getLanes()[0]
+                shape = lane.getShape()
+                if len(shape) >= 2:
+                    # Punto medio de la calle para la flecha
+                    mid_idx = len(shape) // 2
+                    p_start = shape[mid_idx - 1]
+                    p_end = shape[mid_idx]
+                    
+                    # Calcular dirección
+                    dx = p_end[0] - p_start[0]
+                    dy = p_end[1] - p_start[1]
+                    length = (dx**2 + dy**2)**0.5
+                    
+                    if length > 0:
+                        # Normalizar y escalar
+                        ux, uy = dx / length, dy / length
+                        arrow_length = length * 0.1  # flecha pequeña
+                        
+                        # Posición de la flecha (punto medio del segmento)
+                        arrow_start_x = p_start[0] + ux * length * 0.4
+                        arrow_start_y = p_start[1] + uy * length * 0.4
+                        arrow_end_x = arrow_start_x + ux * arrow_length
+                        arrow_end_y = arrow_start_y + uy * arrow_length
+                        
+                        # FancyArrowPatch con ángulos simples
+                        arrow = patches.FancyArrowPatch(
+                            (arrow_start_x, arrow_start_y),
+                            (arrow_end_x, arrow_end_y),
+                            arrowstyle='->',
+                            mutation_scale=15,
+                            linewidth=1,
+                            color='gray',
+                            zorder=2.5
+                        )
+                        ax.add_patch(arrow)
         
         # --- NUEVO: Dibujar Sensores E1 (Espiras) ---
         for e1_id in traci.inductionloop.getIDList():

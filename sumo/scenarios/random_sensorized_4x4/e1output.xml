@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- generated on 2026-05-20T12:41:01.883616+01:00 by Eclipse SUMO sumo v1_26_0+1447-560845bb718
+<sumoConfiguration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/sumoConfiguration.xsd">
+
+    <input>
+        <net-file value="scenarios/random_sensorized_4x4/rs.net.xml"/>
+        <route-files value="scenarios/random_sensorized_4x4/rs.rou.xml"/>
+        <additional-files value="scenarios/random_sensorized_4x4/rs.add.xml"/>
+    </input>
+
+    <report>
+        <no-warnings value="true"/>
+        <no-step-log value="true"/>
+    </report>
+
+    <traci_server>
+        <remote-port value="42899"/>
+    </traci_server>
+
+    <random_number>
+        <seed value="892926"/>
+    </random_number>
+
+</sumoConfiguration>

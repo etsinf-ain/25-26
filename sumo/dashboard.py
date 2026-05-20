@@ -76,6 +76,9 @@ if start_btn and not st.session_state.running:
     elif selected_cfg.endswith("random_sensorized.sumocfg"):
         from tools import build_random_sensorized
         build_random_sensorized.build_random_sensorized(seed)
+    elif selected_cfg.endswith("random_sensorized_4x4.sumocfg"):
+        from tools import build_random_sensorized_4x4
+        build_random_sensorized_4x4.build_random_sensorized_4x4(seed)
     
     # Initialize and start the engine
     st.session_state.engine = SumoEngine(selected_cfg, seed=seed)
