@@ -87,22 +87,33 @@ def build_random_sensorized_4x4(seed=None):
     incoming = {f"n_{x}_{y}": [] for x in range(grid_size) for y in range(grid_size)}
     outgoing = {f"n_{x}_{y}": [] for x in range(grid_size) for y in range(grid_size)}
     
+    # Contar también si un nodo tiene conexiones de avenida (bidireccionales)
+    avenue_connected = {f"n_{x}_{y}": 0 for x in range(grid_size) for y in range(grid_size)}
+    
     for edge_id, from_node, to_node, is_avenue_edge in edge_list:
-        if not is_avenue_edge:  # Solo contar calles unidireccionales
+        if is_avenue_edge:
+            # Registrar la conexión de avenida en ambos nodos
+            avenue_connected[from_node] += 1
+            avenue_connected[to_node] += 1
+        else:
+            # Solo contar calles unidireccionales en los contadores de entrada/salida
             outgoing[from_node].append((edge_id, to_node))
             incoming[to_node].append((edge_id, from_node))
     
     # Buscar nodos problemáticos: que tengan SOLO calles unidireccionales 
-    # y todas sean entradas O todas sean salidas
+    # y todas sean entradas O todas sean salidas. No tocar nodos que tengan
+    # alguna conexión de avenida (bidireccional).
     diagonals_added = []
     for node_id in incoming:
+        # Omitir nodos que estén conectados a una avenida (no deben modificarse)
+        if avenue_connected.get(node_id, 0) > 0:
+            continue
+
         x, y = int(node_id.split('_')[1]), int(node_id.split('_')[2])
         in_count = len(incoming[node_id])
         out_count = len(outgoing[node_id])
         
-        # Solo procesar si el nodo tiene conexiones EXCLUSIVAMENTE unidireccionales
-        # (no tiene avenidas conectadas)
-        # Si tiene conexiones unidireccionales pero todas son entradas O todas son salidas
+        # Procesar solo si el nodo tiene conexiones unidireccionales y todas son entradas O todas son salidas
         if in_count > 0 and out_count == 0:  # Solo entradas en unidireccionales
             # Crear una salida hacia un vecino
             candidates = []
@@ -116,7 +127,9 @@ def build_random_sensorized_4x4(seed=None):
                 target = random.choice(candidates)
                 diagonal_id = f"E_{node_id}_{target}"
                 
-                if diagonal_id not in [eid for eid, _, _, _ in edge_list]:
+                # Evitar crear diagonal si ya existe cualquier arista entre los nodos
+                existing_ids = {eid for eid, _, _, _ in edge_list}
+                if diagonal_id not in existing_ids:
                     ET.SubElement(edges, 'edge', {'id': diagonal_id, 'from': node_id, 'to': target, 'numLanes': "1", 'speed': "8.33", 'priority': "1", 'oneway': "true"})
                     edge_list.append((diagonal_id, node_id, target, False))
                     diagonals_added.append((node_id, diagonal_id))
@@ -134,7 +147,9 @@ def build_random_sensorized_4x4(seed=None):
                 target = random.choice(candidates)
                 diagonal_id = f"E_{target}_{node_id}"
                 
-                if diagonal_id not in [eid for eid, _, _, _ in edge_list]:
+                # Evitar crear diagonal si ya existe cualquier arista entre los nodos
+                existing_ids = {eid for eid, _, _, _ in edge_list}
+                if diagonal_id not in existing_ids:
                     ET.SubElement(edges, 'edge', {'id': diagonal_id, 'from': target, 'to': node_id, 'numLanes': "1", 'speed': "8.33", 'priority': "1", 'oneway': "true"})
                     edge_list.append((diagonal_id, target, node_id, False))
                     diagonals_added.append((node_id, diagonal_id))

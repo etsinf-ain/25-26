@@ -1,36 +1,31 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <additional xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/additional_file.xsd">
     <laneAreaDetector file="e2output.xml" freq="60" friendlyPos="x" id="e2det_E_n_0_0_n_1_0_0" lane="E_n_0_0_n_1_0_0" length="50" pos="85.5" />
-    <inductionLoop id="e1det_E_n_1_1_n_1_0_0" lane="E_n_1_1_n_1_0_0" pos="85.5" freq="60" file="e1output.xml" />
-    <laneAreaDetector file="e2output.xml" freq="60" friendlyPos="x" id="e2det_E_n_2_0_n_1_0_0" lane="E_n_2_0_n_1_0_0" length="50" pos="88.70000000000002" />
-    <laneAreaDetector file="e2output.xml" freq="60" friendlyPos="x" id="e2det_E_n_0_2_n_1_2_0" lane="E_n_0_2_n_1_2_0" length="50" pos="80.97" />
-    <inductionLoop id="e1det_E_n_1_3_n_1_2_0" lane="E_n_1_3_n_1_2_0" pos="88.70000000000002" freq="60" file="e1output.xml" />
-    <laneAreaDetector file="e2output.xml" freq="60" friendlyPos="x" id="e2det_E_n_2_2_n_1_2_0" lane="E_n_2_2_n_1_2_0" length="50" pos="88.70000000000002" />
-    <inductionLoop id="e1det_E_n_0_3_n_0_2_0" lane="E_n_0_3_n_0_2_0" pos="91.20000000000002" freq="60" file="e1output.xml" />
-    <inductionLoop id="e1det_E_n_1_1_n_0_2_0" lane="E_n_1_1_n_0_2_0" pos="138.58" freq="60" file="e1output.xml" />
-    <laneAreaDetector file="e2output.xml" freq="60" friendlyPos="x" id="e2det_E_n_1_2_n_0_2_0" lane="E_n_1_2_n_0_2_0" length="50" pos="80.97" />
+    <laneAreaDetector file="e2output.xml" freq="60" friendlyPos="x" id="e2det_E_n_1_1_n_1_0_0" lane="E_n_1_1_n_1_0_0" length="50" pos="85.5" />
+    <laneAreaDetector file="e2output.xml" freq="60" friendlyPos="x" id="e2det_E_n_2_0_n_1_0_0" lane="E_n_2_0_n_1_0_0" length="50" pos="85.5" />
+    <inductionLoop id="e1det_E_n_0_1_n_1_1_0" lane="E_n_0_1_n_1_1_0" pos="85.5" freq="60" file="e1output.xml" />
+    <laneAreaDetector file="e2output.xml" freq="60" friendlyPos="x" id="e2det_E_n_1_0_n_1_1_0" lane="E_n_1_0_n_1_1_0" length="50" pos="85.5" />
+    <laneAreaDetector file="e2output.xml" freq="60" friendlyPos="x" id="e2det_E_n_1_2_n_1_1_0" lane="E_n_1_2_n_1_1_0" length="50" pos="85.5" />
+    <inductionLoop id="e1det_E_n_0_2_n_0_3_0" lane="E_n_0_2_n_0_3_0" pos="85.5" freq="60" file="e1output.xml" />
+    <laneAreaDetector file="e2output.xml" freq="60" friendlyPos="x" id="e2det_E_n_0_3_n_1_3_0" lane="E_n_0_3_n_1_3_0" length="50" pos="85.5" />
+    <laneAreaDetector file="e2output.xml" freq="60" friendlyPos="x" id="e2det_E_n_1_2_n_1_3_0" lane="E_n_1_2_n_1_3_0" length="50" pos="85.5" />
+    <laneAreaDetector file="e2output.xml" freq="60" friendlyPos="x" id="e2det_E_n_2_3_n_1_3_0" lane="E_n_2_3_n_1_3_0" length="50" pos="85.5" />
     <laneAreaDetector file="e2output.xml" freq="60" friendlyPos="x" id="e2det_E_n_1_0_n_0_0_0" lane="E_n_1_0_n_0_0_0" length="50" pos="85.5" />
-    <laneAreaDetector file="e2output.xml" freq="60" friendlyPos="x" id="e2det_E_n_1_0_n_2_0_0" lane="E_n_1_0_n_2_0_0" length="50" pos="88.70000000000002" />
+    <laneAreaDetector file="e2output.xml" freq="60" friendlyPos="x" id="e2det_E_n_1_0_n_2_0_0" lane="E_n_1_0_n_2_0_0" length="50" pos="85.5" />
     <laneAreaDetector file="e2output.xml" freq="60" friendlyPos="x" id="e2det_E_n_2_1_n_2_0_0" lane="E_n_2_1_n_2_0_0" length="50" pos="85.5" />
-    <laneAreaDetector file="e2output.xml" freq="60" friendlyPos="x" id="e2det_E_n_3_0_n_2_0_0" lane="E_n_3_0_n_2_0_0" length="50" pos="89.5" />
-    <inductionLoop id="e1det_E_n_1_1_n_2_1_0" lane="E_n_1_1_n_2_1_0" pos="88.70000000000002" freq="60" file="e1output.xml" />
+    <laneAreaDetector file="e2output.xml" freq="60" friendlyPos="x" id="e2det_E_n_3_0_n_2_0_0" lane="E_n_3_0_n_2_0_0" length="50" pos="91.20000000000002" />
+    <laneAreaDetector file="e2output.xml" freq="60" friendlyPos="x" id="e2det_E_n_1_1_n_1_2_0" lane="E_n_1_1_n_1_2_0" length="50" pos="85.5" />
+    <laneAreaDetector file="e2output.xml" freq="60" friendlyPos="x" id="e2det_E_n_1_3_n_1_2_0" lane="E_n_1_3_n_1_2_0" length="50" pos="85.5" />
+    <inductionLoop id="e1det_E_n_1_1_n_2_1_0" lane="E_n_1_1_n_2_1_0" pos="85.5" freq="60" file="e1output.xml" />
     <laneAreaDetector file="e2output.xml" freq="60" friendlyPos="x" id="e2det_E_n_2_0_n_2_1_0" lane="E_n_2_0_n_2_1_0" length="50" pos="85.5" />
     <laneAreaDetector file="e2output.xml" freq="60" friendlyPos="x" id="e2det_E_n_2_2_n_2_1_0" lane="E_n_2_2_n_2_1_0" length="50" pos="85.5" />
     <inductionLoop id="e1det_E_n_3_1_n_2_1_0" lane="E_n_3_1_n_2_1_0" pos="85.5" freq="60" file="e1output.xml" />
-    <laneAreaDetector file="e2output.xml" freq="60" friendlyPos="x" id="e2det_E_n_1_2_n_2_2_0" lane="E_n_1_2_n_2_2_0" length="50" pos="88.70000000000002" />
+    <inductionLoop id="e1det_E_n_1_2_n_2_2_0" lane="E_n_1_2_n_2_2_0" pos="85.5" freq="60" file="e1output.xml" />
     <laneAreaDetector file="e2output.xml" freq="60" friendlyPos="x" id="e2det_E_n_2_1_n_2_2_0" lane="E_n_2_1_n_2_2_0" length="50" pos="85.5" />
-    <laneAreaDetector file="e2output.xml" freq="60" friendlyPos="x" id="e2det_E_n_2_3_n_2_2_0" lane="E_n_2_3_n_2_2_0" length="50" pos="85.5" />
-    <laneAreaDetector file="e2output.xml" freq="60" friendlyPos="x" id="e2det_E_n_3_2_n_2_2_0" lane="E_n_3_2_n_2_2_0" length="50" pos="85.5" />
-    <laneAreaDetector file="e2output.xml" freq="60" friendlyPos="x" id="e2det_E_n_2_0_n_3_0_0" lane="E_n_2_0_n_3_0_0" length="50" pos="89.5" />
-    <laneAreaDetector file="e2output.xml" freq="60" friendlyPos="x" id="e2det_E_n_3_1_n_3_0_0" lane="E_n_3_1_n_3_0_0" length="50" pos="89.5" />
-    <inductionLoop id="e1det_E_n_2_1_n_3_1_0" lane="E_n_2_1_n_3_1_0" pos="85.5" freq="60" file="e1output.xml" />
-    <laneAreaDetector file="e2output.xml" freq="60" friendlyPos="x" id="e2det_E_n_3_0_n_3_1_0" lane="E_n_3_0_n_3_1_0" length="50" pos="89.5" />
-    <laneAreaDetector file="e2output.xml" freq="60" friendlyPos="x" id="e2det_E_n_3_2_n_3_1_0" lane="E_n_3_2_n_3_1_0" length="50" pos="85.5" />
-    <laneAreaDetector file="e2output.xml" freq="60" friendlyPos="x" id="e2det_E_n_2_2_n_2_3_0" lane="E_n_2_2_n_2_3_0" length="50" pos="85.5" />
-    <inductionLoop id="e1det_E_n_3_3_n_2_3_0" lane="E_n_3_3_n_2_3_0" pos="89.5" freq="60" file="e1output.xml" />
-    <laneAreaDetector file="e2output.xml" freq="60" friendlyPos="x" id="e2det_E_n_2_2_n_3_2_0" lane="E_n_2_2_n_3_2_0" length="50" pos="85.5" />
-    <laneAreaDetector file="e2output.xml" freq="60" friendlyPos="x" id="e2det_E_n_3_1_n_3_2_0" lane="E_n_3_1_n_3_2_0" length="50" pos="85.5" />
-    <laneAreaDetector file="e2output.xml" freq="60" friendlyPos="x" id="e2det_E_n_3_3_n_3_2_0" lane="E_n_3_3_n_3_2_0" length="50" pos="89.5" />
-    <inductionLoop id="e1det_E_n_2_3_n_3_3_0" lane="E_n_2_3_n_3_3_0" pos="89.5" freq="60" file="e1output.xml" />
-    <laneAreaDetector file="e2output.xml" freq="60" friendlyPos="x" id="e2det_E_n_3_2_n_3_3_0" lane="E_n_3_2_n_3_3_0" length="50" pos="89.5" />
+    <laneAreaDetector file="e2output.xml" freq="60" friendlyPos="x" id="e2det_E_n_2_3_n_2_2_0" lane="E_n_2_3_n_2_2_0" length="50" pos="88.70000000000002" />
+    <laneAreaDetector file="e2output.xml" freq="60" friendlyPos="x" id="e2det_E_n_1_3_n_2_3_0" lane="E_n_1_3_n_2_3_0" length="50" pos="85.5" />
+    <laneAreaDetector file="e2output.xml" freq="60" friendlyPos="x" id="e2det_E_n_2_2_n_2_3_0" lane="E_n_2_2_n_2_3_0" length="50" pos="88.70000000000002" />
+    <laneAreaDetector file="e2output.xml" freq="60" friendlyPos="x" id="e2det_E_n_3_3_n_2_3_0" lane="E_n_3_3_n_2_3_0" length="50" pos="91.20000000000002" />
+    <laneAreaDetector file="e2output.xml" freq="60" friendlyPos="x" id="e2det_E_n_2_0_n_3_0_0" lane="E_n_2_0_n_3_0_0" length="50" pos="91.20000000000002" />
+    <inductionLoop id="e1det_E_n_3_2_n_3_3_0" lane="E_n_3_2_n_3_3_0" pos="91.20000000000002" freq="60" file="e1output.xml" />
 </additional>
