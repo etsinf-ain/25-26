@@ -1,1 +1,1 @@
-<configuration><input><net-file value="rs.net.xml"/><route-files value="rs.rou.xml"/><additional-files value="rs.add.xml"/></input></configuration>
+<configuration><input><net-file value="rs.net.xml"/><route-files value="rs.rou.xml"/><additional-files value="rs.add.xml,rs.vtype.xml"/></input></configuration>

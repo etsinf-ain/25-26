@@ -159,45 +159,43 @@ def build_random_sensorized_4x4(seed=None):
     # Compilar red
     subprocess.run(["netconvert", "--node-files", f"{path}/rs.nod.xml", "--edge-files", f"{path}/rs.edg.xml", "--output-file", f"{path}/rs.net.xml", "--no-turnarounds", "true"]) 
 
-    # Trafico: aumentar flujo reduciendo periodo
+    # Crear archivo de tipos de vehículos personalizado
+    vtype_xml = f"{path}/rs.vtype.xml"
+    vtype_content = """<?xml version="1.0" encoding="UTF-8"?>
+<additional xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/additional_file.xsd">
+    <vType id="passenger" accel="0.8" decel="4.5" sigma="0.1" length="5.0" maxSpeed="15.0" speedDev="0.2"/>
+</additional>
+"""
+    with open(vtype_xml, 'w') as f:
+        f.write(vtype_content)
+
+    # Generar tráfico con randomTrips.py
     sumo_home = os.environ.get("SUMO_HOME")
     if not sumo_home:
         print("SUMO_HOME no definido; asegúrate de tener SUMO instalado y SUMO_HOME en el entorno")
     script_path = os.path.join(sumo_home, "tools", "randomTrips.py") if sumo_home else "randomTrips.py"
-    # periodo 0.5 => más vehículos
     subprocess.run([sys.executable, script_path, "-n", f"{path}/rs.net.xml", "-e", "150", "-o", f"{path}/rs.trips.xml", "-r", f"{path}/rs.rou.xml", "-p", "0.5"])
     
-    # Post-procesar rou.xml para añadir tipo de vehículo con velocidades variables
+    # Ajustar rs.rou.xml: eliminar vType generados por randomTrips y asignar type a vehículos
     rou_path = f"{path}/rs.rou.xml"
     try:
         rou_tree = ET.parse(rou_path)
         rou_root = rou_tree.getroot()
         
-        # Crear elemento root si no existe
-        if rou_root.tag != 'routes':
-            rou_root = ET.Element('routes')
+        # Eliminar vType generados (se usará rs.vtype.xml incluido en .sumocfg)
+        for vtype in list(rou_root.findall('vType')):
+            rou_root.remove(vtype)
         
-        # Insertar vType al principio con speedDev para variabilidad
-        vtype = ET.Element('vType')
-        vtype.set('id', 'passenger')
-        vtype.set('accel', '0.8')
-        vtype.set('decel', '4.5')
-        vtype.set('sigma', '0.1')
-        vtype.set('length', '5.0')
-        vtype.set('maxSpeed', '15.0')
-        vtype.set('speedDev', '0.2')
-        rou_root.insert(0, vtype)
-        
-        # Asignar tipo a todos los vehículos
+        # Asignar type="passenger" a todos los vehículos
         for vehicle in rou_root.findall('vehicle'):
             vehicle.set('type', 'passenger')
         
-        # Escribir con indentación
         if hasattr(ET, 'indent'):
             ET.indent(rou_root, space="    ")
         rou_tree.write(rou_path, encoding='UTF-8', xml_declaration=True)
     except Exception as e:
-        print(f"Advertencia al post-procesar rou.xml: {e}") 
+        print(f"Advertencia al post-procesar rou.xml: {e}")
+     
 
     # Generar detectores (por defecto genera detectores e2)
     detector_tool = os.path.join(sumo_home, "tools", "output", "generateTLSE2Detectors.py") if sumo_home else "generateTLSE2Detectors.py"
@@ -268,8 +266,8 @@ def build_random_sensorized_4x4(seed=None):
     except FileNotFoundError:
         pass
 
-    # 4) Escribir archivo de configuración
-    cfg = f"""<configuration><input><net-file value="rs.net.xml"/><route-files value="rs.rou.xml"/><additional-files value="rs.add.xml"/></input></configuration>"""
+    # 4) Escribir archivo de configuración con rs.vtype.xml incluido
+    cfg = f"""<configuration><input><net-file value="rs.net.xml"/><route-files value="rs.rou.xml"/><additional-files value="rs.add.xml,rs.vtype.xml"/></input></configuration>"""
     with open(f"{path}/random_sensorized_4x4.sumocfg", "w") as f:
         f.write(cfg)
 
